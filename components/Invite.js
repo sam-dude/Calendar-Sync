@@ -1,9 +1,25 @@
 import React from "react";
 import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
+// import * as SMS from 'expo-sms';
 
 const InviteUser = React.memo(({ name, iconUrl }) => {
-  const handleInvite = () => {
-    console.log("Invite", name);
+  const handleInvite = async () => {
+    // const isAvailable = await SMS.isAvailableAsync();
+    // if (isAvailable) {
+    //   const { result } = await SMS.sendSMSAsync(
+    //     ['0123456789', '9876543210'],
+    //     'My sample HelloWorld message',
+    //     {
+    //       attachments: {
+    //         uri: 'path/myfile.png',
+    //         mimeType: 'image/png',
+    //         filename: 'myfile.png',
+    //       },
+    //     }
+    //   );
+    // } else {
+    //   // misfortune... there's no SMS available on this device
+    // }
   }
   return (
     <TouchableOpacity style={styles.dropdownButton} onPress={handleInvite}>

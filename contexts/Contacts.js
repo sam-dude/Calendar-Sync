@@ -10,11 +10,11 @@ export const ContactsProvider = ({ children }) => {
           const { status } = await Contacts.requestPermissionsAsync();
           if (status === 'granted') {
             const { data } = await Contacts.getContactsAsync({
-              fields: [Contacts.Fields.Emails],
+              fields: [Contacts.Fields.Name, Contacts.Fields.PhoneNumbers],
             });
     
             if (data.length > 0) {
-              const contact = data[0];
+              const contact = data[11];
               console.log("Contacts: ",contact);
                 setContacts(data);
             }
