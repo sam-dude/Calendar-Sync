@@ -1,12 +1,15 @@
 import React from "react";
 import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 
-const InviteUser = ({ name, iconUrl }) => {
+const InviteUser = React.memo(({ name, iconUrl }) => {
+  const handleInvite = () => {
+    console.log("Invite", name);
+  }
   return (
-    <TouchableOpacity style={styles.dropdownButton}>
+    <TouchableOpacity style={styles.dropdownButton} onPress={handleInvite}>
       <View style={styles.friend}>
-        <Image source={iconUrl} style={styles.logo} />
-        <Text style={styles.dropdownText}>{name}</Text>
+        {/* <Image source={iconUrl} style={styles.logo} /> */}
+        <Text style={styles.dropdownText} numberOfLines={1}>{name}</Text>
       </View>
       <View style={styles.invite}>
         <Image
@@ -17,7 +20,7 @@ const InviteUser = ({ name, iconUrl }) => {
       </View>
     </TouchableOpacity>
   );
-};
+});
 
 const styles = StyleSheet.create({
   dropdownButton: {
@@ -42,6 +45,7 @@ const styles = StyleSheet.create({
   friend: {
     flexDirection: "row",
     alignItems: "center",
+    flex: 1,
   },
   invite: {
     flexDirection: "row",

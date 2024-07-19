@@ -8,14 +8,17 @@ import {
   Image,
   Dimensions,
   ScrollView,
+  FlatList,
 } from "react-native";
 import InviteUser from "../components/Invite";
 import { AntDesign } from "@expo/vector-icons";
 import { Appbar } from "react-native-paper";
+import { useContacts } from "../contexts/Contacts";
 
 const Invite = ({ navigation }) => {
   const [title, setTitle] = useState("");
   const { height, screenHeight } = Dimensions.get("window");
+  const { contacts } = useContacts();
 
   const Data = [
     {
@@ -56,7 +59,7 @@ const Invite = ({ navigation }) => {
     setTitle(newText);
   };
 
-  const searchData = Data.filter((item) =>
+  const searchData = contacts.filter((item) =>
     item.name.toLowerCase().includes(title.toLowerCase())
   );
 
@@ -131,7 +134,7 @@ const Invite = ({ navigation }) => {
             />
           </View>
         </View>
-        <ScrollView style={styles.section}>
+        {/* <ScrollView style={styles.section}>
           {searchData.map((item, index) => (
             <InviteUser
               name={changeName(item.name)}
@@ -139,7 +142,20 @@ const Invite = ({ navigation }) => {
               key={index}
             />
           ))}
-        </ScrollView>
+        </ScrollView> */}
+        <FlatList
+          data={searchData}
+          keyExtractor={(item) => item.id.toString()} 
+          renderItem={({ item }) => (
+            <InviteUser
+              name={changeName(item.name)}
+              iconUrl={item.iconUrl}
+            />
+          )}
+          initialNumToRender={10} // Adjust based on your needs
+          maxToRenderPerBatch={5} // Adjust based on your needs
+          windowSize={5}
+        />
       </View>
     </View>
   );

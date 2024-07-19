@@ -30,14 +30,20 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.emirace.calendarsync"
+      "package": "com.emirace.calendarsync",
+      "permissions": [
+        "android.permission.READ_CALENDAR",
+        "android.permission.WRITE_CALENDAR",
+        "android.permission.READ_CONTACTS",
+        "android.permission.WRITE_CONTACTS"
+      ]
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
     "extra": {
       "eas": {
-        "projectId": "39c75564-69ed-46ce-b92d-226ea16f93a0"
+        "projectId": "6f496ed6-911b-4175-8850-4f9af365c0bd"
       }
     },
     "plugins": [
@@ -63,6 +69,7 @@
           "contactsPermission": "Allow $(PRODUCT_NAME) to access your contacts."
         }
       ]
-    ]
+    ],
+    "owner": "sam-dude"
   }
 }

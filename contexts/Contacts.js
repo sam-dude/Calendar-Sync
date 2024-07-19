@@ -1,9 +1,10 @@
-import { createContext, useEffect } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import * as Contacts from 'expo-contacts';
 
 const ContactsContext = createContext();
 
 export const ContactsProvider = ({ children }) => {
+    const [contacts, setContacts] = useState([]);
     useEffect(() => {
         (async () => {
           const { status } = await Contacts.requestPermissionsAsync();
@@ -14,14 +15,19 @@ export const ContactsProvider = ({ children }) => {
     
             if (data.length > 0) {
               const contact = data[0];
-              console.log(contact);
+              console.log("Contacts: ",contact);
+                setContacts(data);
             }
           }
         })();
       }, []);
   return (
-    <ContactsContext.Provider value={{}}>
+    <ContactsContext.Provider value={{
+        contacts,
+    }}>
       {children}
     </ContactsContext.Provider>
   )
 }
+
+export const useContacts = () => useContext(ContactsContext);
