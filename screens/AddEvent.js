@@ -54,8 +54,8 @@ const AddEvent = ({ navigation }) => {
       "2 hours": { method: "setHours", value: 2 },
       "5 hours": { method: "setHours", value: 5 },
       // Corrected values for "1 day" and "2 days"
-      "1 day": { method: "setDate", value: startDate.getDate() + 1 },
-      "2 days": { method: "setDate", value: startDate.getDate() + 2 }
+      "1 day": { method: "setHours", value: 24 },
+      "2 days": { method: "setDate", value: startDate.getDate() + 1 }
     };
   
     const action = durationMap[duration];
