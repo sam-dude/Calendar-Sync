@@ -42,39 +42,46 @@ const AddEvent = ({ navigation }) => {
   };
 
   const handleAddEvent = async () => {
-    if (selectedDate) {
-      const startDate = new Date(selectedDate);
-      let endDate = new Date(selectedDate);
-      switch (duration) {
-        case "1 hour":
-          endDate.setHours(startDate.getHours() + 1);
-          break;
-        case "2 hours":
-          endDate.setHours(startDate.getHours() + 2);
-          break;
-        case "5 hours":
-          endDate.setHours(startDate.getHours() + 5);
-          break;
-        case "1 day":
-          endDate.setDate(startDate.getDate() + 1);
-          break;
-        case "2 days":
-          endDate.setDate(startDate.getDate() + 2);
-          break;
-      }
-      const newEvent = {
-        title,
-        startDate: startDate.toISOString(),
-        endDate: endDate.toISOString(),
-        notes: description,
-        color,
-        person,
-      };
-      const eventId = await addEvent(newEvent);
-      console.log(`New event ID: ${eventId}`);
-      navigation.goBack();
+    if (!selectedDate) {
+      console.error("Selected date is undefined.");
+      return;
     }
-  };
+  
+    const startDate = new Date(selectedDate);
+    let endDate = new Date(selectedDate);
+    const durationMap = {
+      "1 hour": { method: "setHours", value: 1 },
+      "2 hours": { method: "setHours", value: 2 },
+      "5 hours": { method: "setHours", value: 5 },
+      // Corrected values for "1 day" and "2 days"
+      "1 day": { method: "setDate", value: startDate.getDate() + 1 },
+      "2 days": { method: "setDate", value: startDate.getDate() + 2 }
+    };
+  
+    const action = durationMap[duration];
+    if (action) {
+      if (action.method === "setDate") {
+        endDate.setDate(action.value);
+      } else {
+        endDate[action.method](startDate[action.method === "getHours" ? "getHours" : "getDate"]() + action.value);
+      }
+    } else {
+      console.error("Invalid duration value.");
+      return; // Handle unexpected duration values gracefully
+    }
+  
+    const newEvent = {
+      title,
+      startDate: startDate.toISOString(),
+      endDate: endDate.toISOString(),
+      notes: description,
+      color,
+      person,
+    };
+    const eventId = await addEvent(newEvent);
+    console.log(`New event ID: ${eventId}`);
+    navigation.goBack();
+}
 
   return (
     <View style={{ flex: 1 }}>
